@@ -1,0 +1,49 @@
+# Whitelist: everything is ignored unless listed below. Game files, rips, extracted assets, Ghidra
+# projects/exports and decompiled code must never be committed.
+/*
+!/.gitignore
+!/.gitmodules
+!/.gitattributes
+!/CLAUDE.md
+!/README.md
+!/claude/
+!/mod/
+!/re/
+!/hotd/
+!/re_tsh/
+!/hab_tool.py
+!/word_tool.py
+!/transplant_tool.py
+!/transplant.bat
+!/romaji_table.json
+
+# mod: build output, packages and caches
+/mod/build/
+/mod/dist/
+/mod/.zig-cache/
+/mod/.zig-cache-global/
+*.log
+
+# re (Tod.exe and DLLs): keep notes and scripts only
+/re/*
+!/re/NOTES.md
+!/re/scripts/
+!/re/run_ghidra_export.bat
+!/re/decompile_at.bat
+
+# re_tsh (Typing Space Harrier): notes, scripts, tools
+/re_tsh/*
+!/re_tsh/NOTES.md
+!/re_tsh/scripts/
+!/re_tsh/run_ghidra_export.bat
+!/re_tsh/tools/
+/re_tsh/tools/dgvoodoo/
+
+# hotd (The House of the Dead): notes and tools only
+/hotd/*
+!/hotd/NOTES.md
+!/hotd/TYPING_PLAN.md
+!/hotd/tools/
+
+__pycache__/
+*.pyc

@@ -1,0 +1,55 @@
+Online play (experimental)
+==========================
+
+Two PCs play Arcade together: the host is player 1, the joining PC is player 2. Only key presses travel over the
+network; both games run the same frames with the same keys, so they stay identical ("lockstep"). Every frame both
+games compare a check value; a difference is logged as DESYNC in todmod.log.
+
+This has been tested with two copies of the game on one PC (directly, through the relay, and with simulated
+internet lag and packet loss), not yet between two real PCs. Please report what todmod.log says.
+
+Before you play
+---------------
+Both PCs need the same:
+- todmod version,
+- word packs ([dictionary] in todmod.ini and the files in dict\),
+- typing settings ([input], [typing], [text] language and half_width, keyboard layout),
+- cheats, randomizer (a seed of 0 becomes a fixed seed online) and model packs,
+- Tod.ini game settings (GameSpec in the original configurator, sound switches, hidden commands).
+The simplest way: copy the host's todmod.ini and dict\ folder to the other PC. If something differs, both games say
+so in todmod.log ("settings differ ...") and continue offline.
+
+The joining PC plays on the host's save (options, unlocked items, records); its own user.bin is left untouched.
+
+Setting up (todmod_config.exe, "Online" tab)
+--------------------------------------------
+Host: choose "Host (I am player 1)".
+Joining player: choose "Join (I am player 2)" and enter the host's address.
+
+The joining PC must be able to reach the host. Pick one:
+1. VPN (easiest): both install Tailscale, ZeroTier or Radmin VPN and join the same network; the joining player
+   enters the host's VPN address (for example 100.x.y.z).
+2. Port forwarding: the host forwards UDP port 7845 on the router to the host PC; the joining player enters the
+   host's public address.
+3. Relay server: run tools\online_relay.py (Python 3) on any machine both can reach, for example a small rented
+   server ("python online_relay.py --port 7846", UDP port 7846 open). Both players enter the same relay
+   (name:7846) and the same room name; then nobody needs to forward a port.
+
+Playing
+-------
+Start both games. Each waits for the other (up to 2 minutes; Esc = play offline). In windowed mode the window title
+shows "waiting", then "playing, ping .. ms, delay ..". Player 2 joins Arcade as usual by pressing Enter.
+Both games keep running while their window is in the background, because the other game waits for every frame.
+
+Input delay: keys take effect a few frames later on both PCs so the other PC's keys arrive in time. "Auto" chooses
+from the measured ping (2 frames on a LAN, about 4-6 frames at 100-150 ms ping). If the game stutters, raise it.
+
+If the other game stops answering for 20 seconds, online play ends and each game continues offline.
+
+Settings in todmod.ini [online]
+-------------------------------
+mode=off|host|join, peer=<host address>, port=7845, relay=<server:port>, room=<name>, input_delay=auto|0-15,
+connect_timeout=120, peer_timeout=20 (seconds).
+Diagnostics: log_hashes=1, log_rand_callers=1 (per-frame files; compare the two PCs' files to find where they
+drifted apart); test_lag_ms, test_jitter_ms, test_loss_percent simulate a bad connection.
+play_two_copies.bat starts a host and a joining copy on one PC (the second copy's log is todmod_join.log).

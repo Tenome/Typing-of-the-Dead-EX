@@ -1,0 +1,72 @@
+Subtitles
+=========
+Subtitle files replace the cutscene subtitles with your own text, in any language. Nothing in the game's files is
+changed.
+
+Editing
+-------
+Open todmod_config.exe, "Subtitles" tab. The list shows every subtitle line of the game (366) with the English
+original, plus the nine lines of the attract intro (366-374, "[Attract intro 1]" ...); select a line and type your text below it. "Save file" writes subtitles\<name>.tsv. Tick "Use this
+file in game" and save the settings to use it ([text] subtitles=<name> in todmod.ini).
+
+Type | to start a second line.
+
+How lines are shown
+-------------------
+- Lines in Latin script (English, German, French ...) use the game's own subtitle font. That font has only
+  A-Z a-z 0-9 and ! ' , - . ? ~, so accents and other marks are simplified (é -> e, ß -> ss, : -> -).
+  57 characters fit on a line.
+- Lines with characters the game font cannot show (Japanese, Chinese, Korean, Cyrillic, Greek ...) are drawn
+  with a Windows font, white with a dark outline, centred at the bottom of the screen.
+
+The Windows font is chosen on the Subtitles tab ("Font", Meiryo by default). Tick "Use it for all subtitles" to
+draw every subtitle with it: your lines in any language and the game's own English text (English mode). The
+game's Japanese subtitles are pictures, not text, so they stay as they are. In todmod.ini:
+
+    [text]
+    subtitle_font=Yu Gothic UI
+    subtitle_windows_font=1
+
+The status line under the editor says which font a line will use.
+
+Language mode
+-------------
+Subtitle files work in both modes:
+- Japanese (the game's default): lines from your file are shown at the bottom instead of the game's vertical
+  Japanese subtitles; lines your file leaves empty keep the game's Japanese subtitles.
+- English mode ("English subtitles and game text"): lines your file leaves empty keep the English text.
+
+The attract intro
+-----------------
+The intro that plays before the title screen ("The Curien Mansion Incident...") has Japanese subtitles, but EX
+lost its English lines, so in English mode it had none. If you own the English Typing of the Dead, this restores
+them from your copy:
+
+    python tools\english_subtitles.py "<English game>\Tod_e.exe" Tod.exe subtitles\english.tsv
+
+In English mode todmod uses subtitles\english.tsv as the base: the intro lines, plus the English version's
+wording of a few other lines. A subtitle file you choose still wins line by line. english.tsv can also be chosen
+as the subtitle file itself, for English subtitles at the bottom in Japanese mode.
+
+Timing
+------
+Each subtitle starts together with its voice line. On the Subtitles tab, "Start" and "End" set when the selected
+line appears and disappears, in seconds after the voice starts (for example 0.4 and 2.1); leave them empty for the
+game's timing. "Play voice" plays the line's voice, and the text next to it shows the game's timing and the voice
+length.
+- A start after 0 delays the text; an end before the next part's start leaves a gap with no text.
+- Lines in several parts (the game switches text partway through a voice line) are timed part by part: each
+  part's start is when it replaces the previous one.
+- "Keep each subtitle up until its voice line ends" (on by default, [text] subtitles_cover_voice=1) stretches
+  lines that the game takes down before the voice has finished (a few lines vanish seconds early). Voice packs
+  count: a longer replacement voice keeps its subtitle up longer.
+- Timing works in Japanese mode too (the game's subtitle pictures follow it).
+- The attract intro lines (366-374) keep the game's timing.
+tools\subtitle_timing.py lists every voiced line with its game timing and voice length.
+
+File format
+-----------
+UTF-8 text, one line per subtitle: line number<TAB>original<TAB>your text<TAB>start<TAB>end. start and end are
+optional (seconds after the voice starts; empty = the game's timing), and the text may be empty to keep the
+original text with new timing. Lines starting with # are comments. A file with only two columns
+(line number<TAB>your text) works too.

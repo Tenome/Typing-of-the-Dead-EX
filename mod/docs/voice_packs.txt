@@ -1,0 +1,31 @@
+Voice packs
+===========
+
+A voice pack replaces the game's voice lines and sound effects with your own files, like texture, music and
+model packs. Each pack is a folder in voices\. Choose packs in todmod_config.exe ("Voice packs", first wins) or
+in todmod.ini:
+
+  [sound]
+  voice_packs=my_voices,other_pack
+
+Folder layout
+-------------
+A pack mirrors the game's SOUND folder. Use the same folder and file names as the original:
+
+  voices\my_voices\VOICE\ST1\01_J.wav      replaces SOUND\VOICE\ST1\01_J.WAV
+  voices\my_voices\ST1\01_J.wav            the same (the VOICE\ folder may be left out)
+  voices\my_voices\SE\COMMON\GUN5_22.wav   replaces the sound effect SOUND\SE\COMMON\GUN5_22.WAV
+
+Files missing from every pack play the game's own sound. The configurator's "Audio" tab lists every voice line
+(with its subtitle) and every effect, so you can hear which file is which.
+
+Formats
+-------
+WAV (PCM), OGG and FLAC. OGG and FLAC are decoded once to voices\.cache\ (delete that folder to force a new
+decode). Keep voice lines in mono or stereo, 22050 or 44100 Hz.
+
+Notes
+-----
+- Kids mode voices live in SOUND\VOICE\KIDS\ and are replaced the same way (VOICE\KIDS\...).
+- The "Voices" and "Effects" volume sliders apply to replaced sounds too.
+- todmod.log lists the first replacements it plays ("voice packs: Sound/... -> ...").

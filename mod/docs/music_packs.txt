@@ -1,0 +1,37 @@
+Music packs
+===========
+Music packs replace the game's background music (the .wma files in SOUND\BGM) with your own WAV, MP3, OGG or
+FLAC files. Nothing in the game's files is changed.
+
+Put a file named like the track it replaces in a folder in music\, for example
+
+    music\mymusic\ST1.ogg        replaces SOUND\BGM\ST1.wma (stage 1)
+
+and choose the packs in todmod_config.exe ("Music packs", names separated by commas; the first pack that has the
+track wins), or in todmod.ini:
+
+    [music]
+    packs=mymusic
+
+A file with another extension placed directly in SOUND\BGM (SOUND\BGM\ST1.mp3) is used too, after the packs.
+If one folder has several versions of a track, the order is WAV, MP3, OGG, FLAC.
+
+OGG and FLAC files are converted to WAV once, into music\.cache\ (when the game starts, or when the track is
+first played); delete that folder to free the space. Tracks loop exactly as the originals do.
+
+Loop points
+-----------
+A track that loops (stage music, menus) normally restarts from the beginning. To loop only a section, tag the
+file the way many game rips are tagged:
+
+    LOOPSTART   where the loop begins
+    LOOPEND     where it ends and jumps back to LOOPSTART (or LOOPLENGTH = LOOPEND - LOOPSTART)
+
+Values are sample numbers (LOOPSTART=441000) or times (LOOPSTART=0:10.000, 1:02:03.5). OGG and FLAC files use
+their comment tags; WAV files use a "smpl" loop chunk or the same text tags. Without LOOPEND the loop runs to
+the end of the file. MP3 files always loop from the beginning. todmod.log shows the loop in samples
+("music: ST1 -> ... (looping, loop 441000-2646000)").
+
+Track names (SOUND\BGM): ADV_AR, BOSS, BOSS_MOD, CLR, CLR2, ENDL, ENDS, HOD1_ADV (opening), ITEM_SELECT, NAME,
+OVR_AR, RANK_MOD, ST1 ... ST6, ST5BOS1, ST5BOS2, ST6BOS1, ST6BOS2, TRA_MOD. todmod.log lists each track as the
+game asks for it ("music: ST1 ...").

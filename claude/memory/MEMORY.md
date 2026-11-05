@@ -1,0 +1,6 @@
+- [Closing the game](closing-the-game.md) — use mod\tools\close_game.ps1 so the quit box is answered, not left for the user
+- [Autonomous mode](autonomous-mode.md) — user granted autonomy 2026-10-26; limits: stay in project folder, keep backups, ask only for human-only checks
+- [Reaching gameplay](reaching-gameplay.md) — 7 Enter presses (5-14 s every 1.5 s) reach the Arcade car opening (~20 s) and gameplay (~38 s); 4 stop at the menu
+- [Decomp skills](decomp-skills.md) — lemiur's orchestrator/matcher/... skills; need AGENTS.md from the template and git before a campaign
+- [Visible test targets](visible-test-targets.md) — test texture/model replacements on zombies (always on screen), not props
+- [Stall rule](stall-rule.md) — no prompt for 30 s, or endless typing on the same enemies = stuck; close the game and read the log

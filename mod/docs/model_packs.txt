@@ -1,0 +1,101 @@
+Model packs
+===========
+
+A model pack replaces the game's 3D models (characters, zombies, bosses, props, scenery) without touching
+pol.HAB. Each pack is a folder in models\:
+
+    models\<pack>\<bank>\<model id>.obj     a Wavefront OBJ (with an optional .mtl next to it)
+    models\<pack>\<bank>\<model id>.bin     a model in the game's own format (as dumped)
+
+<bank> is optional (models\<pack>\<model id>.obj works too); model ids are unique across the game.
+List the packs in todmod_config.exe ("Model packs", first wins) or in todmod.ini:
+
+    [models]
+    packs=mypack
+
+Getting the originals
+---------------------
+- In game: tick "Save loaded models to models\dump" (todmod.ini [models] dump=1) and play. Every model the game
+  loads is written to models\dump\<bank>\<model id>.obj/.mtl (for editing) and .bin (the original bytes).
+  "List loaded models in todmod_models.log" ([debug] log_models=1) lists them with the time they loaded.
+- All at once, with textures: tools\model_tool.py (Python 3 with numpy and Pillow):
+      python tools\model_tool.py export "<game folder>" "<out folder>" [bank ...]
+  writes every model of pol.HAB as OBJ + MTL + .bin and each bank's textures as PNG, plus models.tsv.
+  python tools\model_tool.py preview <model.obj> <preview.png> draws a quick front and side view.
+
+Editing an OBJ
+--------------
+- Coordinates are the game's (y up), with z negated so the file is right-handed like most editors expect.
+  Keep the model's scale and origin; characters are made of many parts, each its own model id, posed by the
+  game's animations.
+- Materials say which texture and colours a part uses: "m<chunk>_t<texture>" takes the colours and render
+  flags of material chunk <chunk> of the original model and draws with texture <texture> of the model's bank
+  (textures\NNN.png in an export). "m<chunk>_none" draws without a texture. Other names use chunk 0.
+  To repaint, copy the texture (textures\NNN_id<id>.png in an export) into a texture pack folder and edit it;
+  it is matched by its texture id (textures\README.txt), also at 2, 4 or 8 times the size.
+- Faces are triangulated; normals and texture coordinates are used when present (flat normals otherwise).
+- New textures cannot be added yet: use the bank's own texture slots.
+
+Your own character (one OBJ)
+----------------------------
+A character made as a single mesh (one OBJ with one texture, standing in a T-pose or A-pose, y up, facing +z,
+as most model sites and editors export them) does not work dropped into a folder: the game needs one OBJ per
+body part, named by model id, moved as rigid pieces. tools\obj_to_character.py (Python 3 with Pillow) cuts it up for you:
+
+    python tools\obj_to_character.py "<folder>\Tommy.obj" . GTA 46 --name "Tommy Vercetti"
+
+run in this game's folder, writes the pack "GTA" for character kind 46 (any kind from the Characters tab; several
+kinds may follow). Tick the pack under "Model packs"; the Characters tab shows it under the name given, and every
+character of that kind looks like it, and "Play as this" plays as it. Converting onto kind 57 (Player 1) or 58
+(Player 2), e.g. "... GTA 57", replaces the player itself, with "Player 1 as" left on Normal. The cut follows standard body
+proportions, so unusual shapes (long coats, big hair) may bend oddly.
+
+By default the model stays one smooth mesh that bends at the joints (skinning): the converter writes the whole mesh
+into the chest's model with a <model id>.skin file next to it (which part each corner follows, blended across the
+joints), and todmod bends it every frame with the game's own animation. The other parts of the kind become empty
+stand-ins. --rigid instead cuts the model into separate rigid pieces (as before 0.30.0; seams open at the joints).
+
+Rigged characters (glTF / GLB)
+------------------------------
+A character that comes with its own skeleton and skin weights bends at its real joints. Export it as glTF 2.0
+(.glb or .gltf; FBX and most other formats: import into Blender, then File > Export > glTF 2.0), standing in
+a T-pose or A-pose, and run
+
+    python tools\gltf_to_character.py "<folder>\hero.glb" . heroes 57 --name "Hero"
+
+Bones are matched to the game's body parts by their names (Mixamo, Blender/Rigify, Biped, VRM and similar:
+hips/pelvis, spine/chest, neck/head, upper arm, forearm, hand, thigh, calf/leg, foot); fingers, toes, twist and
+other helper bones follow their parent. The tool lists which bones went to which part. Materials are packed into
+one texture.
+
+House of the Dead models
+------------------------
+If you own The House of the Dead (PC, 1998), its zombies can walk in this game. tools\hotd\ (Python 3 with
+Pillow) reads them from your copy of that game:
+
+    python tools\hotd\make_zombie_pack.py "<HOTD folder>\thotd.exe" "<HOTD folder>\art\stage1\creature" .
+
+run in this game's folder, writes the pack "hotd_zombies": each of this game's 23 human zombie kinds becomes a
+different House of the Dead zombie (body parts, damaged versions and head animation frames, with an atlas of
+their textures). tools\hotd\make_human_pack.py writes "hotd_humans" the same way: the civilians and story
+characters become the House of the Dead agents, Sophie, the scientists and the robed figure. Pick the packs under
+"Model packs" in todmod_config.exe (both: hotd_zombies,hotd_humans). The Characters tab then shows them with
+their names and previews, so you can also play as them ("Play as this"). One body onto chosen kinds:
+
+    python tools\hotd\to_tod.py "<HOTD>\thotd.exe" "<HOTD>\art\stage1\creature" . <body> <kind> [<kind> ...]
+
+(<body> is a House of the Dead body number, <kind> a character kind as on the Characters tab; pack
+"hotd_body<body>"). tools\hotd\preview_tod.py draws a converted pack on its skeleton; tools\hotd\assemble.py and
+export_parts.py export all House of the Dead bodies and parts as OBJ for other uses. The packs are made from your
+own copy of the game: don't share them.
+
+Notes
+-----
+- A model pack can name the characters it changes: characters.tsv in the pack folder, lines kind<TAB>name. The
+  Characters tab shows those names and draws the pack's models while the pack is listed under "Model packs".
+- A model pack can carry textures: textures\<pack> (same name as the model pack) is used automatically while the
+  model pack is chosen.
+- Characters with a replaced model don't get the game's waist "belt" (vertices the game moves at run time to close
+  the gap between torso and hips, which only fit the original model).
+- Replacements apply when the game loads a model (a stage or menu start), not while it is shown.
+- todmod.log lists every replaced model ("models: <id> <- <file>").

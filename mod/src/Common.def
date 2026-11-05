@@ -1,0 +1,4 @@
+LIBRARY Common.dll
+EXPORTS
+    GetUserFolderPath = Common_orig.GetUserFolderPath @1
+    bIsWindowsVersionOK = Common_orig.bIsWindowsVersionOK @2

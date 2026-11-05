@@ -1,0 +1,51 @@
+Texture packs
+=============
+A texture pack is a folder in textures\ whose PNG files replace the game's own textures: menus in another
+language, recolours, cleaned-up art. Nothing in the game's files is changed.
+
+Choose the packs in todmod_config.exe ("Texture packs", names separated by commas; the first pack that has a
+texture wins), or in todmod.ini:
+
+    [textures]
+    packs=english
+
+Layout
+------
+    textures\<pack>\<bank>\<index>.png
+
+<bank> is the name of a texture bank in tex.HAB without ".bin" (for example scr_tod_msel), <index> the texture's
+position in that bank, three digits from 000. Anything after the three digits is ignored, so the file names
+written by hab_tool.py tex-export (000_id193.png) work as they are.
+
+Any PNG whose name contains "_id<number>" (or starts with "id<number>") also replaces the texture with that
+texture id, wherever it is in the pack (up to three folders deep, for example textures\<pack>\crates\
+000_id786.png or simply textures\<pack>\id786.png). Use this for 3D models (characters, props, scenery):
+many banks share the same texture, and the game creates each texture id only once, from whichever bank loads
+first, so the id is the reliable way to reach it. A bank\index file wins over an id match in the same pack.
+
+A replacement can have the original texture's size or 2, 4 or 8 times it (up to 4096 pixels) for sharper art,
+or any power-of-two size (64, 128, 256, ... per side), e.g. a new atlas for a replaced model; other sizes are
+skipped and logged.
+Transparency is kept as far as the texture's own format allows (some textures have 1-bit or no alpha).
+
+Finding a texture
+-----------------
+Set [debug] log_textures=1 in todmod.ini, play to the screen you want to change and close the game:
+todmod_textures.log lists every texture loaded, one tab-separated line each (time, bank, index, texture id,
+width, height, pixel format, data format, replacement file and its size if one was used). Export that bank with
+hab_tool.py (tex-export) to get the original PNGs to edit.
+
+Model textures: tools\model_tool.py export (see models\README.txt) writes each model bank's textures as
+textures\NNN_id<id>.png next to the OBJ files, and the dumped .mtl files name them the same way. Edit one,
+copy it into a texture pack folder keeping its name, and every model using that texture changes.
+
+English menus from the English version
+--------------------------------------
+If you own the English Typing of the Dead, tools\english_textures.py (Python 3 with numpy and Pillow) writes a
+pack with every 2D texture the English version translated (mission captions, tutorial tips, mode and chapter
+select, VS CPU, results, lessons, item cards, boss advice scrolls, drill select):
+
+    python english_textures.py "The Typing of The Dead" "...\TODEX" "...\TODEX\textures\english"
+
+Screens laid out differently in the two versions are matched texture by texture; screens where the English
+version has different art or credits rather than a translation are left out.

@@ -1,0 +1,144 @@
+Gameplay, sound and display options
+===================================
+
+All of these are in todmod_config.exe; the todmod.ini keys are given for reference.
+
+Extras (Settings tab, "Extras" group)
+-------------------------------------
+- Live WPM, accuracy and streak ([display] show_typing=1): under the score in the top right; streak = words in a
+  row without a typo.
+- Read finished words aloud ([fun] speak_words=1, speech_rate -10..10, speech_volume 0..100): Windows
+  text-to-speech says each word you finish. Japanese words need a Japanese Windows voice.
+- Typewriter gun ([fun] typewriter_gun=1): gunshots become typewriter clacks and every finished word rings the
+  bell. The sounds are generated, no files needed.
+- Photo mode ([fun] photo_mode=1): F12 during play freezes the picture without the HUD; F12 saves a PNG to
+  photos\, Esc goes back. The waist joint of a zombie very close to the camera can show a gap in the frozen
+  picture (the pause screen has the same).
+- Mute when in the background ([sound] mute_in_background=1): silent while another window is in front.
+- Hide the reading line ([typing] hide_reading=1): only the word itself is shown; you type without seeing the
+  letters (blind typing). Single letters and drills keep their line.
+- Field of view ([display] fov=25..100, 0 = the game's 41 degrees): vertical view angle. Word boxes stay on the
+  zombies; cutscene letterbox bars are resized to match.
+
+Subtitle size and position (Subtitles tab, [text] subtitle_size / subtitle_position)
+-----------------------------------------------------------------------------------
+Size in percent applies to lines drawn with the Windows font; position (percent from the top, empty = the game's
+82) moves every subtitle line.
+
+Achievements (Stats tab, [stats] achievements=1)
+------------------------------------------------
+17 achievements (First Blood, Flawless, Machine Gun Keyboard, Night Owl ...) unlock as you play and show at the
+top of the screen. The Stats tab lists them with their dates (stats\achievements.tsv). Off while [debug] autotype
+is on.
+
+Practice your misses (Stats tab, "Make a practice pack from my misses")
+----------------------------------------------------------------------
+Collects the words you mistyped most (then the slowest) from every game in stats\ and makes the word pack
+dict\practice_misses (300 words), put first in "In use". Words are as you typed them (lower case; Japanese
+words in romaji).
+
+Volume (Settings tab, "Volume" sliders, [sound] music_volume / effects_volume / voice_volume)
+------------------------------------------------------------------------------------------
+The game itself only switches music, effects and voices on or off. The three sliders set each from 0 to 100 %
+(100 = the game's own level). Music packs, the game's own music, the Dreamcast chainsaw loop, effects and voice
+lines all follow them.
+
+Score display (Settings tab, Extras, [display] show_score=1)
+-----------------------------------------------------------
+Shows the running score of each player in the top right corner during play (both players when two play). It is
+the word score (base points + rank points); the chapter result then adds accuracy points and rescued citizens.
+
+Voice packs (Settings tab, [sound] voice_packs=<pack>,<pack>)
+-------------------------------------------------------------
+Replace any voice line or sound effect. See voices\README.txt.
+
+Import a character model (Settings tab, Extras)
+-----------------------------------------------
+Pick an OBJ, glTF or GLB file, a pack name and the character it replaces (Player 1 by default). The configurator
+runs tools\obj_to_character.py or tools\gltf_to_character.py (Python 3 with Pillow and numpy:
+"pip install pillow numpy"), puts the new pack first in Model packs and can choose that character for Player 1.
+The converter's output is in todmod_import.log.
+
+Blood colour (Settings tab, "Blood", [display] blood=<colour>)
+--------------------------------------------------------------
+The game has red and green blood textures and uses the green ones. "Red" uses the game's red ones (as in The House
+of the Dead 2). purple, gold, blue, grey, black, white, pink, orange, cyan and yellow are the red blood tinted as it
+loads; rainbow gives every blood texture its own colour; paintball changes the colour with every blood splash
+(all blood on screen takes the new colour).
+For blood of your own, make a texture pack with PNGs in textures\<pack>\scr_blood_red\ (when a colour other than
+green is chosen) or textures\<pack>\scr_blood_green\ (green); see textures\README.txt. A pack's pictures win over
+the tint.
+
+Audio library (configurator "Audio" tab)
+----------------------------------------
+Every music track (with a name), voice line (with its subtitle, where the game has one) and sound effect of your
+game folder. Double-click to play; Pause and Stop below the lists.
+
+Infinite lives (Settings tab, Cheats, [cheats] infinite_lives=1)
+-----------------------------------------------------------------
+Hits still knock you back, but you never lose a life.
+
+Pause menu ([gameplay] pause_menu=1)
+------------------------------------
+Esc during play freezes the game and shows a menu (Up/Down to choose, Enter to confirm, Esc to resume):
+- Resume: carry on where you were.
+- Restart stage: start the current chapter again from its opening, keeping the mode you chose (Story or
+  Training); lives and score start fresh.
+- Exit to menu: back to the main menu (Arcade mode / Original mode / ...).
+Music and looping sounds pause with the game. Not available during online play.
+
+Mutators ("Mutators" tab, [mutators])
+-------------------------------------
+- Most lives (max_lives=1 or 2): you never have more lives than this. 1 = one hit and the game is over.
+- Typos cost a life (typos_hurt=1): a wrong key on a word you are typing hurts like a zombie hit (at most once
+  per hit pause, about 1.5 seconds).
+- Word difficulty (word_level=easiest|hardest): the game normally makes words easier after you are hit and harder
+  while you do well; this keeps them at the easiest or the hardest level.
+- Words (words=reversed|scrambled): words from your word packs are shown reversed ("is" becomes "si"), or with
+  their inner letters shuffled ("typing" becomes "tpiyng"; first and last letters stay). You type what you see.
+- Letter case (letter_case=upper|lower|random): changes the case of pack words. Typing only checks case when
+  "Capital letters must match" is on (Settings tab).
+- Game speed (speed=50..200): the whole game runs slower or faster (150 = 90 updates per second).
+Words and letter case only change your word packs (dict\), not the game's built-in word.HAB.
+
+Randomizer weapons ("Randomizer" tab, [randomizer] weapons=1)
+-------------------------------------------------------------
+Thrown weapons (axes, hammers, pitchforks, maces, even the chainsaw) turn into a random weapon when they are
+thrown.
+
+More or fewer zombies ("Randomizer" tab, [randomizer] enemy_min / enemy_max)
+-----------------------------------------------------------------------------
+Each zombie the stage sends appears between enemy_min and enemy_max times (0-4). Extra zombies appear right
+beside the original and the area waits for all of them. With 0 some zombies stay away, but one of each group
+always comes. Only zombies that simply walk in or throw axes are doubled; bosses, the jumping zombies and zombies with scripted
+entrances (through doors, from behind furniture) come once.
+
+Zombies that look like people ([randomizer] human_zombies = 0, 25, 50 or 100)
+-----------------------------------------------------------------------------
+That percentage of zombie types is drawn with a civilian's body. They still move, attack and take words like
+zombies. Zombies whose moves need their own body (axe throwers, the chainsaw zombie, the monkey-faced wall
+jumper, the assassins) always keep their look.
+
+Borderless window (Settings tab, [display] borderless=1)
+--------------------------------------------------------
+The game runs in a window without a frame that covers the whole screen, so Alt+Tab is instant. With width and
+height 0 the game renders at the screen's size.
+
+Typing statistics ("Stats" tab, [stats] enabled=1)
+--------------------------------------------------
+After every game todmod writes stats\:
+- history.tsv: one line per game and player (words, correct keys, typos, accuracy, words per minute, most missed
+  letters),
+- <date>.txt: the full report including your hardest words and every word you typed,
+- practice_words.txt: your most mistyped and slowest words; turn it into a word pack with
+  "New pack from word list..." on the Settings tab.
+Words per minute counts 5 keys as a word and only the time from the first to the last key of each word.
+
+Replays ("Replays" tab, [replay])
+---------------------------------
+Every game is recorded to replays\ (record=1; the newest 20 are kept). A replay holds the keys of both players
+for every frame, your save and the randomizer seed (a few kilobytes plus the save). "Watch selected replay"
+starts the game with that replay: the keyboard does nothing until the replay ends, then you can play on.
+A replay plays back exactly only with the same todmod version, word packs and settings; todmod.log names what
+differs and logs "game differs from the recording" if the replay drifts. Online games are recorded too.
+To watch from the command line: set TODMOD_REPLAY=<file in replays\> and start Tod.exe.

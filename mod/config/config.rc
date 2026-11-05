@@ -1,0 +1,164 @@
+#pragma code_page(65001)
+#include <windows.h>
+#include <commctrl.h>
+#include "resource.h"
+
+1 24 "app.manifest"
+
+IDD_CONFIG DIALOGEX 0, 0, 600, 538
+STYLE DS_SETFONT | DS_CENTER | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+CAPTION "Typing of the Dead EX - todmod settings"
+FONT 9, "Segoe UI", 400, 0, 1
+BEGIN
+    GROUPBOX        "Display", -1, 7, 4, 188, 158
+    LTEXT           "Resolution:", -1, 14, 19, 54, 8
+    COMBOBOX        IDC_RESOLUTION, 70, 17, 118, 220, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Custom size:", -1, 14, 35, 54, 8
+    EDITTEXT        IDC_WIDTH, 70, 33, 40, 12, ES_NUMBER | WS_TABSTOP
+    CTEXT           "x", -1, 110, 35, 12, 8
+    EDITTEXT        IDC_HEIGHT, 122, 33, 40, 12, ES_NUMBER | WS_TABSTOP
+    AUTOCHECKBOX    "Play in a window", IDC_WINDOWED, 14, 51, 76, 10
+    AUTOCHECKBOX    "Borderless (fills the screen)", IDC_BORDERLESS, 92, 51, 100, 10
+    AUTOCHECKBOX    "Widescreen (3D fills the screen, menus stay 4:3)", IDC_WIDESCREEN, 14, 63, 174, 10
+    LTEXT           "Colour depth:", -1, 14, 81, 54, 8
+    COMBOBOX        IDC_BPP, 70, 79, 118, 100, CBS_DROPDOWNLIST | WS_TABSTOP
+    LTEXT           "Texture filter:", -1, 14, 97, 54, 8
+    COMBOBOX        IDC_FILTER, 70, 95, 118, 100, CBS_DROPDOWNLIST | WS_TABSTOP
+    LTEXT           "Detail level:", -1, 14, 113, 54, 8
+    COMBOBOX        IDC_GAMESPEC, 70, 111, 118, 100, CBS_DROPDOWNLIST | WS_TABSTOP
+    AUTOCHECKBOX    "Fog", IDC_FOG, 14, 131, 60, 10
+    AUTOCHECKBOX    "Transparency effects", IDC_TRANSPARENCY, 80, 131, 100, 10
+    AUTOCHECKBOX    "Small textures", IDC_SMALL_TEXTURES, 14, 145, 62, 10
+    LTEXT           "Blood:", -1, 80, 146, 24, 8
+    COMBOBOX        IDC_RED_BLOOD, 106, 143, 82, 200, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    GROUPBOX        "Sound", -1, 7, 166, 188, 28
+    AUTOCHECKBOX    "Sound", IDC_SOUND, 14, 179, 40, 10
+    AUTOCHECKBOX    "Music", IDC_MUSIC, 58, 179, 40, 10
+    AUTOCHECKBOX    "Effects", IDC_EFFECTS, 102, 179, 40, 10
+    AUTOCHECKBOX    "Voice", IDC_VOICE, 146, 179, 40, 10
+
+    GROUPBOX        "Other", -1, 7, 198, 188, 74
+    AUTOCHECKBOX    "Keep running when the window is not active", IDC_BACKGROUND, 14, 210, 174, 10
+    AUTOCHECKBOX    "Show version number", IDC_SHOW_VERSION, 14, 222, 174, 10
+    AUTOCHECKBOX    "Low-CPU frame limiter (sleeps between frames)", IDC_LOW_CPU_LIMITER, 14, 234, 174, 10
+    AUTOCHECKBOX    "Smooth motion above 60 Hz (experimental)", IDC_FRAME_INTERPOLATION, 14, 246, 174, 10
+    AUTOCHECKBOX    "Skip cutscenes automatically", IDC_SKIP_CUTSCENES, 14, 258, 174, 10
+
+    GROUPBOX        "Volume", -1, 205, 4, 188, 62
+    LTEXT           "Music:", -1, 212, 18, 34, 8
+    CONTROL         "", IDC_MUSIC_VOLUME, "msctls_trackbar32", TBS_HORZ | TBS_NOTICKS | WS_TABSTOP, 246, 15, 112, 14
+    LTEXT           "100%", IDC_MUSIC_VOLUME_TEXT, 360, 18, 28, 8
+    LTEXT           "Effects:", -1, 212, 34, 34, 8
+    CONTROL         "", IDC_EFFECTS_VOLUME, "msctls_trackbar32", TBS_HORZ | TBS_NOTICKS | WS_TABSTOP, 246, 31, 112, 14
+    LTEXT           "100%", IDC_EFFECTS_VOLUME_TEXT, 360, 34, 28, 8
+    LTEXT           "Voices:", -1, 212, 50, 34, 8
+    CONTROL         "", IDC_VOICE_VOLUME, "msctls_trackbar32", TBS_HORZ | TBS_NOTICKS | WS_TABSTOP, 246, 47, 112, 14
+    LTEXT           "100%", IDC_VOICE_VOLUME_TEXT, 360, 50, 28, 8
+
+    GROUPBOX        "Voice packs (folders in voices\, first wins)", -1, 205, 70, 188, 28
+    EDITTEXT        IDC_VOICE_PACKS, 212, 81, 116, 12, ES_AUTOHSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Open folder", IDC_OPEN_VOICES, 332, 80, 54, 14
+
+    GROUPBOX        "Your own characters", -1, 205, 102, 188, 60
+    PUSHBUTTON      "Import a character model (OBJ / glTF)...", IDC_IMPORT_MODEL, 212, 116, 174, 14
+    LTEXT           "Makes a model pack from your model (needs Python with Pillow and numpy).", -1, 212, 134, 176, 18
+
+    GROUPBOX        "Word packs", -1, 403, 4, 190, 438
+    LTEXT           "Available:", -1, 410, 16, 70, 8
+    LISTBOX         IDC_PACKS_AVAILABLE, 410, 26, 72, 160, LBS_NOTIFY | LBS_SORT | WS_VSCROLL | WS_BORDER | WS_TABSTOP
+    PUSHBUTTON      "Add >", IDC_PACK_ADD, 485, 28, 34, 14
+    PUSHBUTTON      "< Remove", IDC_PACK_REMOVE, 485, 44, 34, 14
+    PUSHBUTTON      "Up", IDC_PACK_UP, 485, 64, 34, 14
+    PUSHBUTTON      "Down", IDC_PACK_DOWN, 485, 80, 34, 14
+    LTEXT           "In use (top first):", -1, 522, 16, 64, 8
+    LISTBOX         IDC_PACKS_ACTIVE, 522, 26, 64, 160, LBS_NOTIFY | WS_VSCROLL | WS_BORDER | WS_TABSTOP
+    LTEXT           "Description:", -1, 410, 190, 70, 8
+    EDITTEXT        IDC_PACK_DESCRIPTION, 410, 200, 176, 180, ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "New pack from word list...", IDC_PACK_FROM_LIST, 410, 386, 110, 14
+    PUSHBUTTON      "Check coverage", IDC_PACK_COVERAGE, 524, 386, 62, 14
+    AUTOCHECKBOX    "Mix the words of all packs in use", IDC_MIX_PACKS, 410, 406, 176, 10
+    AUTOCHECKBOX    "Top pack's lines in file order (short words stay random)", IDC_IN_ORDER, 410, 418, 180, 10
+
+    GROUPBOX        "Extra characters", -1, 205, 166, 188, 82
+    LTEXT           "Font for letters the game font lacks (é, ł, ß, 한 ...):", -1, 212, 178, 176, 8
+    COMBOBOX        IDC_FONT, 212, 190, 122, 200, CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Height:", -1, 336, 192, 24, 8
+    EDITTEXT        IDC_FONT_SIZE, 360, 190, 26, 12, ES_NUMBER | WS_TABSTOP
+    AUTOCHECKBOX    "Bold", IDC_FONT_BOLD, 212, 206, 40, 10
+    AUTOCHECKBOX    "Narrow Latin text for all words", IDC_HALF_WIDTH, 254, 206, 136, 10
+    LTEXT           "Height = capital letters in pixels; 20 matches the game.", -1, 212, 222, 176, 8
+
+    GROUPBOX        "Texture packs (folders in textures\\, first wins)", -1, 7, 276, 188, 28
+    EDITTEXT        IDC_TEXTURE_PACKS, 14, 287, 116, 12, ES_AUTOHSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Open folder", IDC_OPEN_TEXTURES, 134, 286, 54, 14
+
+    GROUPBOX        "Music packs (folders in music\\, first wins)", -1, 7, 306, 188, 28
+    EDITTEXT        IDC_MUSIC_PACKS, 14, 317, 116, 12, ES_AUTOHSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Open folder", IDC_OPEN_MUSIC, 134, 316, 54, 14
+
+    GROUPBOX        "Language and typing", -1, 205, 252, 188, 94
+    AUTOCHECKBOX    "Spaces must be typed (pack words)", IDC_TYPE_SPACES, 212, 320, 176, 10
+    AUTOCHECKBOX    "Backspace also cancels the word (like Esc)", IDC_BACKSPACE_CANCELS, 212, 332, 176, 10
+    AUTOCHECKBOX    "Capital letters must match (pack words)", IDC_CASE_SENSITIVE, 212, 264, 176, 10
+    AUTOCHECKBOX    "Score capitals as harder (+4 difficulty each)", IDC_CASE_SCORING, 222, 276, 166, 10
+    AUTOCHECKBOX    "English subtitles and game text (English mode)", IDC_ENGLISH_MODE, 212, 290, 176, 10
+    LTEXT           "Keyboard layout:", -1, 212, 306, 58, 8
+    COMBOBOX        IDC_KEYBOARD_LAYOUT, 272, 304, 116, 100, CBS_DROPDOWNLIST | WS_TABSTOP
+
+    GROUPBOX        "Model packs (folders in models\\, first wins)", -1, 7, 348, 188, 42
+    COMBOBOX        IDC_MODEL_PACKS, 14, 358, 116, 100, CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Open folder", IDC_OPEN_MODELS, 134, 358, 54, 14
+    AUTOCHECKBOX    "Save loaded models to models\\dump (OBJ + original)", IDC_DUMP_MODELS, 14, 375, 174, 10
+
+    GROUPBOX        "Logs (for pack makers)", -1, 205, 348, 188, 42
+    AUTOCHECKBOX    "List loaded textures in todmod_textures.log", IDC_LOG_TEXTURES, 212, 360, 176, 10
+    AUTOCHECKBOX    "List loaded models in todmod_models.log", IDC_LOG_MODELS, 212, 374, 176, 10
+
+    GROUPBOX        "Cheats", -1, 7, 394, 386, 48
+    AUTOCHECKBOX    "Big heads for everyone", IDC_BIG_HEADS, 14, 407, 90, 10
+    AUTOCHECKBOX    "Infinite lives", IDC_INFINITE_LIVES, 108, 407, 90, 10
+    LTEXT           "Skin suit:", -1, 212, 408, 36, 8
+    COMBOBOX        IDC_SUIT, 250, 406, 138, 100, CBS_DROPDOWNLIST | WS_TABSTOP
+    LTEXT           "Player 1 as:", -1, 14, 425, 40, 8
+    COMBOBOX        IDC_PLAYER1_CHARACTER, 56, 423, 138, 220, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Player 2 as:", -1, 208, 425, 40, 8
+    COMBOBOX        IDC_PLAYER2_CHARACTER, 250, 423, 138, 220, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+
+    GROUPBOX        "Extras", -1, 7, 446, 586, 66
+    AUTOCHECKBOX    "Show the score (top right)", IDC_SHOW_SCORE, 14, 458, 140, 10
+    AUTOCHECKBOX    "Live WPM, accuracy and streak", IDC_SHOW_TYPING, 160, 458, 140, 10
+    AUTOCHECKBOX    "Read finished words aloud", IDC_SPEAK_WORDS, 306, 458, 140, 10
+    AUTOCHECKBOX    "Typewriter gun (clack and bell)", IDC_TYPEWRITER, 452, 458, 136, 10
+    AUTOCHECKBOX    "Photo mode (F12, saves to photos\\)", IDC_PHOTO_MODE, 14, 472, 140, 10
+    AUTOCHECKBOX    "Mute when in the background", IDC_MUTE_BACKGROUND, 160, 472, 140, 10
+    AUTOCHECKBOX    "Hide the reading line (type blind)", IDC_HIDE_READING, 306, 472, 140, 10
+    LTEXT           "Field of view:", -1, 14, 492, 50, 8
+    CONTROL         "", IDC_FOV, "msctls_trackbar32", TBS_HORZ | TBS_NOTICKS | WS_TABSTOP, 64, 489, 180, 14
+    LTEXT           "41 degrees (game)", IDC_FOV_TEXT, 248, 492, 120, 8
+
+    PUSHBUTTON      "Open dict folder", IDC_OPEN_DICT, 7, 518, 70, 14
+    LTEXT           "", IDC_STATUS, 82, 521, 340, 8
+    DEFPUSHBUTTON   "Save and play", IDC_SAVE_PLAY, 429, 518, 60, 14
+    PUSHBUTTON      "Save", IDC_SAVE, 493, 518, 48, 14
+    PUSHBUTTON      "Close", IDCANCEL, 545, 518, 48, 14
+END
+
+IDD_IMPORT_MODEL DIALOGEX 0, 0, 260, 132
+STYLE DS_SETFONT | DS_CENTER | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Import a character model"
+FONT 9, "Segoe UI", 400, 0, 1
+BEGIN
+    LTEXT           "Model (.obj, .gltf or .glb):", -1, 7, 9, 90, 8
+    EDITTEXT        IDC_IMPORT_FILE, 7, 19, 190, 12, ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Browse...", IDC_IMPORT_BROWSE, 201, 18, 52, 14
+    LTEXT           "Pack name (folder in models\):", -1, 7, 38, 110, 8
+    EDITTEXT        IDC_IMPORT_PACK, 120, 36, 133, 12, ES_AUTOHSCROLL | WS_TABSTOP
+    LTEXT           "Replaces character:", -1, 7, 55, 110, 8
+    COMBOBOX        IDC_IMPORT_KIND, 120, 53, 133, 220, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    AUTOCHECKBOX    "Use the pack (put it first in Model packs)", IDC_IMPORT_USE_PACK, 7, 72, 246, 10
+    AUTOCHECKBOX    "Play as this character (Player 1)", IDC_IMPORT_PLAY_AS, 7, 84, 246, 10
+    LTEXT           "Rigged glTF/GLB keeps its skeleton; OBJ is bent automatically. Needs Python with Pillow and numpy.", -1, 7, 97, 246, 16
+    DEFPUSHBUTTON   "Convert", IDOK, 147, 114, 52, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 201, 114, 52, 14
+END

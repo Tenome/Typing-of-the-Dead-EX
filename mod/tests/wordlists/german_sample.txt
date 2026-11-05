@@ -1,0 +1,386 @@
+# German test list for todmod (one word or phrase per line; optional TAB reading)
+ja
+nein
+Ei
+Uhr
+Ohr
+Bär
+Öl
+Tür
+Hut
+Hund
+Katze
+Maus
+Haus
+Baum
+Brot
+Milch
+Käse
+Apfel
+Birne
+Stadt
+Dorf
+Straße
+Brücke
+Fluss
+Meer
+Berg
+Wald
+Wiese
+Blume
+Sonne
+Mond
+Stern
+Himmel
+Wolke
+Regen
+Schnee
+Wind
+Feuer
+Wasser
+Erde
+Luft
+Zeit
+Jahr
+Monat
+Woche
+Tag
+Nacht
+Morgen
+Abend
+Mittag
+Stunde
+Minute
+Sekunde
+heute
+gestern
+morgen früh
+Freund
+Freundin
+Familie
+Vater
+Mutter
+Bruder
+Schwester
+Großvater
+Großmutter
+Kind
+Mädchen
+Junge
+Frau
+Mann
+Mensch
+Leute
+Arbeit
+Schule
+Lehrer
+Schüler
+Buch
+Heft
+Stift
+Tisch
+Stuhl
+Fenster
+Wand
+Boden
+Decke
+Küche
+Zimmer
+Garten
+Garage
+Auto
+Fahrrad
+Zug
+Flugzeug
+Schiff
+Bahnhof
+Flughafen
+Hafen
+Kirche
+Schloss
+Burg
+Markt
+Laden
+Geschäft
+Bäckerei
+Metzgerei
+Apotheke
+Krankenhaus
+Arzt
+Ärztin
+Polizei
+Feuerwehr
+Rathaus
+Bürgermeister
+Zeitung
+Fernseher
+Telefon
+Computer
+Bildschirm
+Tastatur
+Schreibmaschine
+Rechnung
+Geld
+Münze
+Preis
+billig
+teuer
+groß
+klein
+lang
+kurz
+alt
+jung
+neu
+schön
+hässlich
+schnell
+langsam
+stark
+schwach
+warm
+kalt
+heiß
+müde
+wach
+glücklich
+traurig
+wütend
+ängstlich
+mutig
+ruhig
+laut
+leise
+dunkel
+hell
+schwer
+leicht
+richtig
+falsch
+gut
+schlecht
+besser
+am besten
+gehen
+laufen
+rennen
+springen
+schwimmen
+fliegen
+fahren
+kommen
+bleiben
+schlafen
+essen
+trinken
+kochen
+backen
+lesen
+schreiben
+rechnen
+lernen
+spielen
+singen
+tanzen
+lachen
+weinen
+sprechen
+sagen
+fragen
+antworten
+hören
+sehen
+schauen
+fühlen
+denken
+wissen
+glauben
+hoffen
+lieben
+hassen
+öffnen
+schließen
+kaufen
+verkaufen
+bezahlen
+zählen
+warten
+suchen
+finden
+verlieren
+gewinnen
+kämpfen
+fliehen
+retten
+helfen
+Zombie
+Untoter
+Friedhof
+Gruft
+Grab
+Sarg
+Geist
+Gespenst
+Monster
+Ungeheuer
+Vampir
+Werwolf
+Hexe
+Zauberer
+Fluch
+Albtraum
+Schrecken
+Gänsehaut
+Mitternacht
+Vollmond
+Nebel
+Gewitter
+Blitz
+Donner
+Kerze
+Laterne
+Taschenlampe
+Schlüssel
+Tür öffnen
+Keller
+Dachboden
+Labor
+Experiment
+Wissenschaftler
+Professor
+Agent
+Mission
+Gefahr
+Rettung
+Ausgang
+Eingang
+Treppe
+Aufzug
+Korridor
+Halle
+Turm
+Mauer
+Tor
+Brunnen
+Höhle
+Tunnel
+Kanal
+Schiffswrack
+Leuchtturm
+Gefängnis
+Zelle
+Wächter
+Kampf
+Sieg
+Niederlage
+Punkte
+Rekord
+Bestzeit
+Tastendruck
+Fehler
+Treffer
+Lebensenergie
+Munition
+nachladen
+zielen
+schießen
+ausweichen
+Bewegung
+Geschwindigkeit
+Genauigkeit
+Konzentration
+Übung macht den Meister
+Wer zuletzt lacht lacht am besten
+Morgenstund hat Gold im Mund
+Der frühe Vogel fängt den Wurm
+Alles hat ein Ende
+Ende gut alles gut
+Aller Anfang ist schwer
+Kleider machen Leute
+Lügen haben kurze Beine
+Viele Köche verderben den Brei
+Ordnung ist das halbe Leben
+Zeit ist Geld
+Hunger ist der beste Koch
+Wo ein Wille ist ist ein Weg
+Rom wurde nicht an einem Tag erbaut
+Geduld bringt Rosen
+Doppelt hält besser
+Eile mit Weile
+Gut Ding will Weile haben
+Kopf hoch
+Viel Glück
+Guten Morgen
+Guten Tag
+Gute Nacht
+Auf Wiedersehen
+Bis später
+Bis morgen
+Wie geht es dir
+Mir geht es gut
+Danke schön
+Bitte schön
+Entschuldigung
+Herzlichen Glückwunsch
+Frohe Weihnachten
+Gutes neues Jahr
+Fünf
+Zwölf
+Dreizehn
+Zwanzig
+Hundert
+Tausend
+Million
+Milliarde
+Österreich
+Schweiz
+Deutschland
+München
+Köln
+Düsseldorf
+Nürnberg
+Zürich
+Lübeck
+Göttingen
+Würzburg
+Saarbrücken
+Fußball
+Handschuh
+Schmetterling
+Eichhörnchen
+Streichholzschächtelchen
+Donaudampfschiff
+Kühlschrank
+Waschmaschine
+Staubsauger
+Glühbirne
+Regenschirm
+Sonnenbrille
+Zahnbürste
+Löffel
+Gabel
+Messer
+Teller
+Schüssel
+Tasse
+Glas
+Flasche
+Spaß
+Größe
+Grüße
+süß
+sauer
+bitter
+salzig
+scharf
+lecker
+Frühstück
+Mittagessen
+Abendessen
+Nachtisch
+Bratwurst
+Brezel
+Sauerkraut
+Schnitzel
+Apfelstrudel
+Schwarzwälder Kirschtorte
